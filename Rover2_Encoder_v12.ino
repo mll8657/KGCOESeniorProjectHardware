@@ -66,7 +66,7 @@ void setup() {
   Serial.println("Right Encoder");
   logfile.println("test_device,pizza_time");
   logfile.println("time,left_rotations,right_rotations,right_rotation_rate");
-  logfile.println("seconds,rotations,rotations,hertz");
+  logfile.println("milliseconds,rotations,rotations,hertz");
   }
 
 void loop() {
@@ -143,7 +143,7 @@ if(millis()>12000){
     Serial.println(Rhz,4);
     timer = millis();
 
-    dataString += timer/1000.0;
+    dataString += timer;
     dataString += ",";
     dataString += Lcount/10.0;
     dataString += ",";
@@ -157,7 +157,7 @@ if(millis()>12000){
     }
     // if the file isn't open, pop up an error:
     else {
-      Serial.println("error opening datalog.txt");
+      Serial.println("error opening LOGGERXX.csv");
     }
   }
   
