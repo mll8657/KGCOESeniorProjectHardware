@@ -64,7 +64,7 @@ void setup() {
   Serial.print("Left Encoder");
   Serial.print("\t");                   
   Serial.println("Right Encoder");
-  logfile.println("test_device,pizza_time");
+  logfile.println("d@test.com,password");
   logfile.println("time,left_rotations,right_rotations,right_rotation_rate");
   logfile.println("milliseconds,rotations,rotations,hertz");
   }
