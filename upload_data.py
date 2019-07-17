@@ -12,7 +12,7 @@ def main():
         print("no file supplied. Please drag valid data file on to upload_data.exe")
         return
     except FileNotFoundError:
-        print("Cannot find supplied file. Possibly a permissions issue")
+        print("Cannot find supplied file. Try dragging and dropping your data file onto upload_data.exe")
         return
 
     # First line has device name & secret
@@ -74,7 +74,8 @@ def main():
 
     # all lines read/validated, begin making requests
     # try to authenticate
-    auth_req = requests.post("http://localhost:8080/api/auth/authenticate", json={"email": device_name, "password": device_secret})
+    api_path = " http://localhost:8080/api/"
+    auth_req = requests.post(api_path + "auth/authenticate", json={"email": device_name, "password": device_secret})
     if auth_req.status_code != 200:
         print("device authentication failed")
         print("make sure the first line of the file contains only the device name and secret")
@@ -89,7 +90,7 @@ def main():
 
     # create output types for the data about to be stored
     for i in range(0, len(value_names)):
-        output_type_req = requests.post("http://localhost:8080/api/v1/output_types", json={"output_type_name": value_names[i], "units": value_units[i]},
+        output_type_req = requests.post(api_path + "v1/output_types", json={"output_type_name": value_names[i], "units": value_units[i]},
                                         headers={'Authorization': 'Bearer '+auth_token})
         # duplicate key gives a 400 error, which is also okay because that just means the type already exists
         if output_type_req.status_code == 201 or output_type_req.status_code == 400:
@@ -100,7 +101,7 @@ def main():
             return
 
     # get the device id
-    device_info = requests.get("http://localhost:8080/api/v1/users/me", headers={'Authorization': 'Bearer '+auth_token})
+    device_info = requests.get(api_path + "v1/users/me", headers={'Authorization': 'Bearer '+auth_token})
     if device_info.status_code != 200:
         # shouldn't happen, if you're authenticated you should be able to get your own info
         print("unable to get device info, probably your internet connection or the server is down.")
@@ -111,7 +112,7 @@ def main():
     # This code still works though, might as well keep it
     #
     # Make a new experiment to put device outputs in
-    # experiment_req = requests.post("http://localhost:8080/api/v1/experiments",
+    # experiment_req = requests.post(api_path + "v1/experiments",
     #                                headers={'Authorization': 'Bearer '+auth_token},
     #                                json={
     #                                    "creator_id": device_id,
@@ -126,7 +127,7 @@ def main():
     # finally, create device outputs
     for line in validated_lines:
         for i in range(1, len(line)):
-            device_output_req = requests.post("http://localhost:8080/api/v1/device_outputs",
+            device_output_req = requests.post(api_path + "v1/device_outputs",
                                               headers={'Authorization': 'Bearer '+auth_token},
                                               json={
                                                 "output_type_name": value_names[i],
