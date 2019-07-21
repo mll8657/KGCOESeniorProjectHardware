@@ -1,6 +1,7 @@
 /* 
-Demonstrates use of rotary encoder for motor
-direction and distance.
+Demonstrates use of rotary encoder for motor direction and distance.
+Used example code from adafruit to log data to the adafruit logger shield.
+https://github.com/adafruit/Light-and-Temp-logger/blob/master/lighttemplogger.ino
 */
 
 #include <SPI.h>
@@ -145,6 +146,7 @@ if(millis()>12000){
 
     dataString += timer;
     dataString += ",";
+	// A wheel does a full rotation after about 10 Lcount or Rcount.
     dataString += Lcount/10.0;
     dataString += ",";
     dataString += Rcount/10.0;

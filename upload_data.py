@@ -34,6 +34,8 @@ def main():
         print("The second line of your file should have a list of value names starting with time")
         print("ex: time,temperature,pressure...")
         return
+
+    # Warn user if their names are numbers (probably a bad file). If they continue anyways, don't warn them again
     skip_warning = False
     for name in value_names:
         try:
@@ -50,6 +52,8 @@ def main():
     if len(value_units) != len(value_names):
         print("number of types inconsistent with units")
         print(str(len(value_units)) + " units were specified, but " + str(len(value_names)) + " value types were named")
+
+    # Warn user if their units are numbers (probably a bad file). If they continue anyways, don't warn them again
     skip_warning = False
     for unit in value_units:
         try:
@@ -108,22 +112,6 @@ def main():
         return
     device_id = json.loads(device_info.content)['id']
 
-    # We decided the data should just go to the last experiment the device was linked to.
-    # This code still works though, might as well keep it
-    #
-    # Make a new experiment to put device outputs in
-    # experiment_req = requests.post(api_path + "v1/experiments",
-    #                                headers={'Authorization': 'Bearer '+auth_token},
-    #                                json={
-    #                                    "creator_id": device_id,
-    #                                    "description": "auto generated experiment from "+json.loads(device_info.content)['email']
-    #                                })
-    # if experiment_req.status_code != 201:
-    #     print("unable to create experiment")
-    #     print("response content: "+str(experiment_req.content))
-    #     return
-    # experiment_id = json.loads(experiment_req.content)['id']
-
     # finally, create device outputs
     for line in validated_lines:
         for i in range(1, len(line)):
@@ -134,7 +122,6 @@ def main():
                                                 "device_id": device_id,
                                                 "output_value": line[i],
                                                 "timestamp": line[0],
-                                                # "experiment_id": experiment_id # only needed if making new experiment
                                               })
             if device_output_req.status_code != 201:
                 print("unexpected response code: "+str(device_output_req.status_code))
