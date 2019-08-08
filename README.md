@@ -4,8 +4,7 @@ Other EDCS repositories:
 - [front end](https://github.com/Jss7268/KGCOESeniorProjectWeb)
 - [back end](https://github.com/Jss7268/KGCOESeniorProjectAPI)
 
-A place to put various arduino code.
-
+## File Format
 The upload_data script needs a particular file format. The first line has the device username and secret (password). The second line has the names of the values being measured starting with time. The third line has the units values are measured in, starting with milliseconds. Further lines all contain readings, the datapoints that are being collected. It looks like this:
 
 ```
