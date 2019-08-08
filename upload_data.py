@@ -27,9 +27,9 @@ def main():
     device_secret = line1[1]
     site_location = line1[2]
     if site_location[-1] == '/':
-        site_location += 'api'
+        site_location += 'api/'
     else:
-        site_location += '/api'
+        site_location += '/api/'
 
     # Second line has names for the readings
     # ex: time,rotations,temperature...
@@ -79,6 +79,12 @@ def main():
             print("data inconsistent with number of values")
             print("Line number "+str(line_number)+" has "+str(len(reading))+" values, but "+str(len(value_names))+" values were named")
             return
+        try:
+            int(reading[0])
+        except ValueError:
+            print("Time must be an integer number of milliseconds")
+            print("Line number "+str(line_number)+" has time "+str(reading[0]+", which is not an integer"))
+            return
         validated_lines.append(reading)
 
     # all lines read/validated, begin making requests
@@ -90,8 +96,9 @@ def main():
         return
     if auth_req.status_code != 200:
         print("device authentication failed")
-        print("make sure the first line of the file contains only the device name and secret")
-        print("ex: device_name,secret")
+        print("make sure the first line of the file contains the correct device name and secret")
+        print("Also, if you're using an IP address, make sure it links to port 8080. e.g. http://localhost:8080")
+        print(auth_req.content)
         return
     try:
         auth_token = json.loads(auth_req.content)['token']
