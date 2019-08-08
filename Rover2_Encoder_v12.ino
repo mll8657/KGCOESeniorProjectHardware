@@ -65,7 +65,8 @@ void setup() {
   Serial.print("Left Encoder");
   Serial.print("\t");                   
   Serial.println("Right Encoder");
-  logfile.println("d@test.com,password");
+  // The first three files for the CSV format
+  logfile.println("d@test.com,password,http://localhost:8080");
   logfile.println("time,left_rotations,right_rotations,right_rotation_rate");
   logfile.println("milliseconds,rotations,rotations,hertz");
   }
