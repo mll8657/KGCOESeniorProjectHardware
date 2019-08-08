@@ -1,8 +1,8 @@
 # KGCOESeniorProjectHardware
 
-Other EDCS repositories
-[front end](https://github.com/Jss7268/KGCOESeniorProjectWeb)
-[back end](https://github.com/Jss7268/KGCOESeniorProjectAPI)
+Other EDCS repositories:
+- [front end](https://github.com/Jss7268/KGCOESeniorProjectWeb)
+- [back end](https://github.com/Jss7268/KGCOESeniorProjectAPI)
 
 A place to put various arduino code.
 
