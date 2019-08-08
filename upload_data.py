@@ -98,7 +98,6 @@ def main():
         print("device authentication failed")
         print("make sure the first line of the file contains the correct device name and secret")
         print("Also, if you're using an IP address, make sure it links to port 8080. e.g. http://localhost:8080")
-        print(auth_req.content)
         return
     try:
         auth_token = json.loads(auth_req.content)['token']
